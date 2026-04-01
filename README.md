@@ -87,10 +87,3 @@ uv run pytest tests/api/test_xxx.py  # 单文件测试
 ## 开发规范
 
 详见 [CLAUDE.md](./CLAUDE.md)
-
-### AI 协作规范
-
-使用 AI 辅助开发时，AI 应自动判断是否需要 commit：
-- 完成有意义的功能或模块后，主动提交代码
-- commit message 遵循 `<type>(<scope>): <description>` 格式
-- 无需等待用户明确要求才提交
