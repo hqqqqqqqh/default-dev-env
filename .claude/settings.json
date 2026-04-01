@@ -1,0 +1,87 @@
+{
+  "$schema": "https://claude.ai/schema/settings.json",
+  "project": {
+    "name": "Toolbox API",
+    "description": "工具站后台服务，提供多种实用功能的 API 接口"
+  },
+  "allowedTools": [
+    "Read",
+    "Edit",
+    "Write",
+    "Bash",
+    "Glob",
+    "Grep",
+    "WebFetch",
+    "WebSearch"
+  ],
+  "permissions": {
+    "allow": [
+      "Read(**)",
+      "Edit(**)",
+      "Write(**)",
+      "Bash(uv sync)",
+      "Bash(uv add *)",
+      "Bash(uv remove *)",
+      "Bash(uv run python *)",
+      "Bash(uv run uvicorn *)",
+      "Bash(uv run pytest *)",
+      "Bash(uv run ruff check)",
+      "Bash(uv run ruff format)",
+      "Bash(uv run mypy)",
+      "Bash(uv run aerich *)",
+      "Bash(git status)",
+      "Bash(git diff)",
+      "Bash(git log)",
+      "Bash(git branch)",
+      "Bash(git checkout *)",
+      "Bash(git switch *)"
+    ],
+    "deny": [
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf ~)",
+      "Bash(sudo *)",
+      "Bash(chmod 777)",
+      "Bash(> /dev/sda*)",
+      "Bash(curl * | bash)",
+      "Bash(wget * | bash)"
+    ]
+  },
+  "environmentVariables": {
+    "ENVIRONMENT": "development"
+  },
+  "autoApprove": [
+    {
+      "pattern": "Read(**)",
+      "description": "自动批准读取文件"
+    },
+    {
+      "pattern": "Bash(git status)",
+      "description": "自动批准查看 git 状态"
+    },
+    {
+      "pattern": "Bash(git diff)",
+      "description": "自动批准查看 git 差异"
+    },
+    {
+      "pattern": "Bash(uv run ruff check)",
+      "description": "自动批准运行 ruff 检查"
+    }
+  ],
+  "hooks": {
+    "beforeCommit": "uv run ruff check && uv run pytest",
+    "afterFileWrite": "uv run ruff format"
+  },
+  "editor": {
+    "formatOnSave": true,
+    "defaultFormatter": "ruff"
+  },
+  "test": {
+    "coverageThreshold": 80,
+    "runOnSave": false
+  },
+  "git": {
+    "defaultBranch": "main",
+    "commitMessageTemplate": "{{type}}({{scope}}): {{description}}\n\nCo-Authored-By: Claude <noreply@anthropic.com>",
+    "requireTestsForCommit": false
+  }
+}
