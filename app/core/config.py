@@ -41,6 +41,21 @@ class Settings(BaseSettings):
     # 测试配置
     REDIS_TEST_DB: int = 15
 
+    # API 校验配置
+    API_KEY_HEADER: str = "X-API-Key"
+    API_KEY_REQUIRED: bool = True
+    API_KEY_CACHE_TTL: int = 300  # Key 缓存时间(秒)
+    RATE_LIMIT_PER_MINUTE: int = 60  # 每分钟限制次数
+    RATE_LIMIT_ENABLED: bool = True  # 是否启用频率限制
+
+    # API 校验白名单路径（无需校验）
+    API_WHITELIST_PATHS: list[str] = [
+        "/health",
+        "/docs",
+        "/redoc",
+        "/openapi.json",
+    ]
+
     @property
     def mysql_url(self) -> str:
         """MySQL 连接 URL"""
