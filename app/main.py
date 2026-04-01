@@ -7,6 +7,7 @@ from fastapi import FastAPI
 
 from app.core.config import settings
 from app.db import init_db, close_db, close_redis
+from app.common.middlewares.auth_middleware import AuthMiddleware
 
 
 @asynccontextmanager
@@ -33,6 +34,9 @@ app = FastAPI(
     description="工具站后台服务，提供多种实用功能的 API 接口",
     lifespan=lifespan,
 )
+
+# 注册认证中间件
+app.add_middleware(AuthMiddleware)
 
 
 @app.get("/health")
